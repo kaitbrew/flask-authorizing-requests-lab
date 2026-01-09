@@ -99,8 +99,8 @@ class MemberOnlyArticle(Resource):
     def get(self, id):
         user_id=session['user_id']
         if user_id:
-            membersOnly=Article.query.filter(Article.is_member_only==True)
-            return ArticleSchema().dump(membersOnly),200
+            wantedArticle=Article.query.filter(Article.id==id)
+            return ArticleSchema().dump(wantedArticle),200
         else:
             return {},401
 
