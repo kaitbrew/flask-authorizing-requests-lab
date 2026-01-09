@@ -87,12 +87,22 @@ class CheckSession(Resource):
 class MemberOnlyIndex(Resource):
     
     def get(self):
-        pass
+        user_id=session['user_id']
+        if user_id:
+            membersOnly=Article.query.filter(Article.is_member_only==True)
+            return ArticleSchema().dump(membersOnly),200
+        else:
+            return {},401
 
 class MemberOnlyArticle(Resource):
     
     def get(self, id):
-        pass
+        user_id=session['user_id']
+        if user_id:
+            membersOnly=Article.query.filter(Article.is_member_only==True)
+            return ArticleSchema().dump(membersOnly),200
+        else:
+            return {},401
 
 api.add_resource(ClearSession, '/clear', endpoint='clear')
 api.add_resource(IndexArticle, '/articles', endpoint='article_list')
